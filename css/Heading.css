@@ -1,0 +1,67 @@
+h1{
+    border-radius: 5px;
+    background: black; 
+    margin: 0;
+  padding: 0;
+}
+.txt {
+    color: #ffffff;
+    background: transparent;
+    font: 100px;
+    font-weight: bold;
+    font-family: 'Times New Roman', Times, serif;
+    text-transform: uppercase;
+}
+.txt::before {
+    position: absolute;
+    mix-blend-mode: difference;
+    filter: blur(3px);
+}
+.neon-wrapper {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display:inline-flex;
+    filter: brightness(300%);
+    overflow: hidden;
+}
+.gradient{
+    background: linear-gradient(114.5793141156962deg, rgba(6, 227, 250,1) 4.927083333333334%,rgba(229, 151, 64,1) 97.84374999999999%);
+    /*position: absolute;*/
+    top: 0;
+    bottom: 40px;
+    /*left:0;*/
+    width:100%;
+    height:8.3%;
+    mix-blend-mode: multiply;
+    background: radial-gradient(circle,rgb(253, 253, 253),rgb(255, 0, 0) 35%) center / 25% 25%;
+    position: absolute;
+    text-align: center;
+    top:10px;
+    left: 100px; 
+    width: 0;
+    height: 25px;
+    width: 560px;
+
+    mix-blend-mode: color-dodge;
+    animation: dodge-area 3s linear infinite;
+}
+/* .dodge {
+    background: radial-gradient(circle,white,rgb(139, 132, 132) 35%) center / 25% 25%;
+    position: absolute;
+    text-align: center;
+    top:0;
+    left: 0; 
+    width: px;
+    height: 25px;
+    width: 560px;
+
+    mix-blend-mode: color-dodge;
+    animation: dodge-area 3s linear infinite;
+} */
+@keyframes dodge-area {
+    to {
+        transform: translate(50%,50%);
+    }
+}

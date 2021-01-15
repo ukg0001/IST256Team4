@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Team 4</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
+	<style>
+		button {
+		 color: white;
+		 font-size: 22px;
+		 text-align: center;
+		 border: none;
+		 cursor: pointer;
+		 width: 45%;
+		 height: 40px;
+		 margin: 4px;
+		}
+		.log{
+			background-color: #4CAF50;
+			color: white;
+			font-size: 22px;
+			text-align: center; 
+			border: none;
+			cursor: pointer;
+			justify-content: center;
+			align-items: center;
+			width: 122px;
+			margin: 4px;
+			text-align: center;
+			cursor: pointer;
+			text-decoration: none;
+		}
+		.signup{
+			color: white;
+			width: 100%;
+			font-size: 22px;
+			text-align: center; 
+			border: none;
+			cursor: pointer;
+			justify-content: center;
+			margin: auto;
+			align-items: center;
+			height: 40px;
+			margin: 4px;
+			text-align: center;
+			cursor: pointer;
+			text-decoration: none;
+  			background-color: #4472C4;
+			display: flex;
+		}
+		button:hover {
+		  opacity: 0.8;}
+		}
+	</style>
+	
+</head>
+
+<body data-ng-app>
+	<link rel="stylesheet" type="text/css" href="../css/Heading.css">
+	<link rel="stylesheet" type="text/css" href="../css/layout.css">
+	<link rel="stylesheet" type="text/css" href="../css/grid.css">
+	<link rel="stylesheet" href="http://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<h1>
+		<span class="txt">Travel to Germany</span>
+		<span class="gradient"></span>
+		<span class="dodge"></span>
+	</h1>
+	<!-- Header  style="margin-left: 100px;"-->
+
+	<header>
+		<nav>
+			<div class="navbar">
+				<a href="../index.html"> <i class="fa fa-fw fa-home"></i> Home </a>
+				<a href="attractions.html"><i class="fa fa-map"></i> Attractions </a>
+				<a href="hotels.html"> <i class="fa fa-hotel"></i> Hotels </a>
+				<a href="flights.html"> <i class="fa fa-plane"></i> Flights </a>
+				<a href="aboutus.html"> <i class="fa fa-envelope"></i> About </a>
+				<a class="active" href="Login.html"> <i class="fa fa-user"></i> Login </a>
+			</div>
+		</nav>
+    </header>
+	<br>
+	<div data-ng-controller="Ctrl">
+	<div ng-hide="signedIn" >
+		<div class="login">
+		    <form data-ng-submit="submit()" >
+				<h2>Username: <input  data-ng-model="Username" /></h2>
+				<h2>Password: <input data-ng-model="Password" /></h2>
+				<h2><div style="text-align:left">Re-enter Your</div> Password: <input data-ng-model="Password2" /></h2><br>
+			    <p >{{passwordMatch}}</p>
+		   
+				<button class="signup" type="submit" id="submit"/>Sign Up</button> 
+				<p>Already have an Account?</p>  <a href="../pages/login.html">Log In</a>
+			</form>
+		</div>
+	</div>
+	<h2>{{welcome}}</h2>
+	</div>
+	<br>
+
+</body>
+<div class="footer" style="border-radius: 8px">
+	<div class="contain">
+		<div class="col">
+			<h1>Company</h1>
+			<ul>
+				<li><a>At Germany Travel, we provide top level corporate travel management for clients worldwide.</a></li>
+			</ul>
+		</div>
+		<div class="col">
+			<h1>links</h1>
+			<ul>
+				<li><a href="../index.html">Home</a></li>
+				<li><a href="../pages/attractions.html">Attractions</a></li>
+				<li><a href="../pages/hotels.html">Hotels</a></li>
+				<li><a href="../pages/flights.html">Flights</a></li>
+				<li><a href="../pages/about.html">About</a></li>
+				<li><a href="../pages/login.html">Login</a></li>
+			</ul>
+		</div>
+
+		<div class="col">
+			<h1>Contact</h1>
+			<ul>
+				<h2>Travel to Germany</h2>
+				<h2>Berlin Central</h2>
+				<h2>Phone Number</h2>
+			</ul>
+		</div >
+		<h1></h1>
+		<ul> <img src="../images/logo1.png"
+				style="margin-left: 250px; margin-right: 90px; margin-top: 40px; margin-bottom: 10px; margin-right: 75px;"
+				height="50" width="1000">
+		</ul>
+	</div>
+	<div class="clearfix"></div>
+</div>
+
+<script>
+    function Ctrl($scope) {
+		
+			 $scope.submit = function () {
+				//Make sure to change the host and port to match the URL 
+				if ($scope.Username == null){
+					$scope.passwordMatch="Enter the Username!";
+				}else if($scope.Password ==null){
+					$scope.passwordMatch="Enter the Password!";
+				}else{
+					if($scope.Password ==$scope.Password2){
+						$scope.passwordMatch="";
+						$scope.signedIn = true;
+
+						var query = "http://localhost:3000/Create?";
+						query += "username=" + $scope.Username;
+						query += "&password=" + $scope.Password;
+						$scope.request = query;
+						$scope.$apply();
+						$.ajax({ url: query, crossDomain: true, dataType: 'json', type: 'GET' })
+						.done(function (json) {
+							$scope.response = json.result;
+							$scope.$apply();
+						})
+						.fail(function () {
+							alert("Error");
+						});
+			
+						$scope.signedIn = true;
+						$scope.welcome = "Hi, "+$scope.Username +"! Welcome to Germany Travel!";
+
+					}else{
+						$scope.passwordMatch="Please make sure passwords match!";
+						$scope.Password = null;
+						$scope.Password2 = null;
+
+					}
+					}
+				
+			}
+		
+    }
+</script>
+</html>
